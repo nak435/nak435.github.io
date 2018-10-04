@@ -88,7 +88,7 @@ class DisplayExtend {
     context.font = `${this.fontSize}px ${font}`;
   }
 
-  clear() {
+  clearCanvas() {
     const context = this._context();
     if (context) {
       context.fillStyle = '#000';
@@ -98,6 +98,9 @@ class DisplayExtend {
     }
     this._pos.x = 0;
     this._pos.y = 0;
+  }
+  clear() {
+    this.clearCanvas();
     let obj = {};
     obj['display'] = {
       clear: true,

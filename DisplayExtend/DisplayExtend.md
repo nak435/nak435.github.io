@@ -1,7 +1,7 @@
 # DisplayExtendクラス
 
-obniz.js標準のDisplayクラスの上位互換クラス。  
-[Display](https://obniz.io/doc/sdk/doc/display)と同じすべての関数が機能するうえ、以下の機能を追加しています。ブラウザおよびNode.js環境で使用できます。
+obniz.js標準の[Displayクラス](https://obniz.io/doc/sdk/doc/display)の上位互換クラス。  
+Displayと同じすべての関数が機能するうえ、以下の機能を追加しています。ブラウザおよびNode.js環境で使用できます。
 
 - 描画関数の追加<br>
 arc() ： 円弧の描画<br>
@@ -27,7 +27,7 @@ const displayEx = new DisplayExtend(obniz);
 
 ```html
 :  :
-<script src="https://obniz.io/users/340/repo/DisplayExtend.js"></script>
+<script src="https://nak435.github.io/DisplayExtend/DisplayExtend.js"></script>
 <script>
   const obniz = new Obniz("OBNIZ_ID_HERE");
   const displayEx = new DisplayExtend(obniz);
@@ -41,7 +41,7 @@ Node.js環境で使う場合（node-canvasが必要）
 
 ```javascript
 const Obniz = require('obniz');
-const DisplayExtend = require('https://obniz.io/users/340/repo/DisplayExtend.js');
+const DisplayExtend = require('https://nak435.github.io/DisplayExtend/DisplayExtend.js');
 
 const obniz = new Obniz("OBNIZ_ID_HERE");
 const displayEx = new DisplayExtend(obniz);
@@ -76,7 +76,7 @@ displayEx.lineSize = 5; //5px
 
 ```javascript
 displayEx.drawImmediately = false;
-displayEx.print(`draw triangle`); //no draw on OLED
+displayEx.print('draw triangle'); //no draw on OLED
 displayEx.line(0, 0, 128, 0);     //no draw on OLED
 displayEx.line(128, 0, 128, 64);  //no draw on OLED
 displayEx.drawImmediately = true;

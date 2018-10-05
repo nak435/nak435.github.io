@@ -139,7 +139,7 @@ class DisplayExtend {
     if (context) {
       context.beginPath();
       context.lineWidth = this.lineSize;
-      context.lineCap = "round";
+      context.lineCap = 'round';
       context.moveTo(x_0, y_0);
       context.lineTo(x_1, y_1);
       context.stroke();
@@ -168,24 +168,72 @@ class DisplayExtend {
   }
 
   qr(text, correction) {
-    this.obniz.display.qr(text, correction);
+    let obj = {};
+    obj['display'] = {
+      qr: {
+        text,
+      },
+    };
+    if (correction) {
+      obj['display'].qr.correction = correction;
+    }
+    this.Obniz.send(obj);
   }
 
   raw(data) {
-    this.obniz.display.raw(data);
+    let obj = {};
+    obj['display'] = {
+      raw: data,
+    };
+    this.Obniz.send(obj);
     this._setTimeout();
   }
 
   setPinName(io, moduleName, funcName) {
-    this.obniz.display.setPinName(io, moduleName, funcName);
+    let obj = {};
+    obj['display'] = {};
+    obj['display']['pin_assign'] = {};
+    obj['display']['pin_assign'][io] = {
+      module_name: moduleName,
+      pin_name: funcName,
+    };
+
+    this.Obniz.send(obj);
   }
 
   setPinNames(moduleName, data) {
-    this.obniz.display.setPinNames(moduleName, data);
+    let obj = {};
+    obj['display'] = {};
+    obj['display']['pin_assign'] = {};
+    let noAssignee = true;
+    for (let key in data) {
+      noAssignee = false;
+      obj['display']['pin_assign'][key] = {
+        module_name: moduleName,
+        pin_name: data[key],
+      };
+    }
+    if (!noAssignee) {
+      this.Obniz.send(obj);
+    }
   }
 
   draw(context) {
-    this.obniz.display.draw(context);
+    const stride = this.width / 8;
+    let vram = new Array(stride * 64);
+    const imageData = ctx.getImageData(0, 0, this.width, this.height);
+    const data = imageData.data;
+
+    for (let i = 0; i < data.length; i += 4) {
+      let brightness = 0.34 * data[i] + 0.5 * data[i + 1] + 0.16 * data[i + 2];
+      let index = parseInt(i / 4);
+      let line = parseInt(index / this.width);
+      let col = parseInt((index - line * this.width) / 8);
+      let bits = parseInt(index - line * this.width) % 8;
+      if (bits == 0) vram[line * stride + col] = 0x00;
+      if (brightness > 0x7f) vram[line * stride + col] |= 0x80 >> bits;
+    }
+    this.raw(vram);
     this._setTimeout();
   }
 
@@ -194,7 +242,7 @@ class DisplayExtend {
     if (context) {
       context.beginPath();
       context.lineWidth = this.lineSize;
-      context.lineCap = "round";
+      context.lineCap = 'round';
       context.arc(x, y, radius, startAngle, endAngle, anticlockwise);
       if (mustFill) {
         context.fill();
@@ -212,7 +260,7 @@ class DisplayExtend {
     if (context) {
       context.beginPath();
         context.lineWidth = this.lineSize;
-        context.lineCap = "round";
+        context.lineCap = 'round';
         context.moveTo(x + radius, y);
         context.lineTo(x + width - radius, y);
         context.arc(x + width - radius, y + radius, radius, Math.PI * 1.5, 0, false);

@@ -221,7 +221,7 @@ class DisplayExtend {
   draw(context) {
     const stride = this.width / 8;
     let vram = new Array(stride * 64);
-    const imageData = ctx.getImageData(0, 0, this.width, this.height);
+    const imageData = context.getImageData(0, 0, this.width, this.height);
     const data = imageData.data;
 
     for (let i = 0; i < data.length; i += 4) {

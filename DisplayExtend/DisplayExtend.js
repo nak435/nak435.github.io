@@ -177,7 +177,7 @@ class DisplayExtend {
     if (correction) {
       obj['display'].qr.correction = correction;
     }
-    this.Obniz.send(obj);
+    this.obniz.send(obj);
   }
 
   raw(data) {
@@ -185,7 +185,7 @@ class DisplayExtend {
     obj['display'] = {
       raw: data,
     };
-    this.Obniz.send(obj);
+    this.obniz.send(obj);
     this._setTimeout();
   }
 
@@ -198,7 +198,7 @@ class DisplayExtend {
       pin_name: funcName,
     };
 
-    this.Obniz.send(obj);
+    this.obniz.send(obj);
   }
 
   setPinNames(moduleName, data) {
@@ -214,7 +214,7 @@ class DisplayExtend {
       };
     }
     if (!noAssignee) {
-      this.Obniz.send(obj);
+      this.obniz.send(obj);
     }
   }
 

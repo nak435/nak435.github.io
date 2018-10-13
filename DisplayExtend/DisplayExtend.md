@@ -42,7 +42,7 @@ Node.js環境で使う場合（node-canvasが必要）
 
 ```javascript
 const Obniz = require('obniz');
-const DisplayExtend = require('https://nak435.github.io/DisplayExtend/DisplayExtend.js');
+const DisplayExtend = require('./DisplayExtend.js');
 
 const obniz = new Obniz("OBNIZ_ID_HERE");
 const displayEx = new DisplayExtend(obniz);

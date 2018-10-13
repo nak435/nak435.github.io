@@ -92,7 +92,7 @@ displayEx.line(128, 64, 0, 0);    //text and triangle draw on OLED
 ## autoClear
 
 描画後一定時間の経過後に自動的にOLEDをクリアする場合、その間隔をミリ秒で指定します。`0`および省略時は自動クリアしません。
-クリアは内部で`clear()`関数を呼び出します。  
+クリアは内部で`clear()`を呼び出します。  
 
 ```javascript
 displayEx.autoClear = 3000; //3s
@@ -109,5 +109,5 @@ displayEx.autoClear = 3000; //3s
 displayEx.onautoclear = function() { console.log('autoclear'); };
 
 ```
-`clear()`関数を明示的に呼び出した場合は、呼び出されません。
+`clear()`を明示的に呼び出した場合は、このコールバック関数は呼び出されません。
 

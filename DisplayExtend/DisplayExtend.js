@@ -1,3 +1,4 @@
+// Usage: https://nak435.github.io/DisplayExtend/DisplayExtend.md
 class DisplayExtend {
   constructor(obniz) {
     this.obniz = obniz;

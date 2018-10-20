@@ -165,7 +165,7 @@ class DisplayExtend {
   }
 
   circle(x, y, radius, mustFill) {
-    this.arc2(x, y, radius, 0, Math.PI * 2, false, mustFill);
+    this.arc(x, y, radius, 0, Math.PI * 2, false, mustFill);
   }
 
   qr(text, correction) {

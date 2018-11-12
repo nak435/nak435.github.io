@@ -1,7 +1,7 @@
 # DisplayExtendクラス
 
 obniz.js標準の[Displayクラス](https://obniz.io/doc/sdk/doc/display)の上位互換クラス。  
-Displayと同じすべての関数が機能するうえ、以下の機能を追加しています。ブラウザおよびNode.js環境で使用できます。
+標準Displayと同じすべての関数が機能するうえ、以下の機能を追加しています。ブラウザおよびNode.js環境で使用できます。
 
 - 描画関数の追加<br>
 arc() ： 円弧の描画<br>

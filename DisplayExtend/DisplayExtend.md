@@ -95,7 +95,7 @@ displayEx.line(128, 64, 0, 0);    //text and triangle draw on OLED
 クリアは内部で`clear()`を呼び出します。  
 
 ```javascript
-displayEx.autoClear = 3000; //3s
+displayEx.autoClear = 3000; //3秒後にクリアする
 ```
 
 自動クリアの時間監視の起点は、`drawImmediately=true`での図形描画後、および`raw()`と`draw()`の呼び出し後です。
@@ -103,7 +103,7 @@ displayEx.autoClear = 3000; //3s
 
 ## onautoclear
 
-コールバック関数が指定している場合は、自動クリア直後に、コールバック関数を呼び出します。
+コールバック関数を指定している場合は、自動クリア直後に、コールバック関数を呼び出します。
 
 ```javascript
 displayEx.onautoclear = function() { console.log('autoclear'); };

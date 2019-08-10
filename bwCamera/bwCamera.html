@@ -20,6 +20,24 @@ table {
 .ui-mobile .ui-dialog .ui-slider-input {
     display: none;
 }
+
+#loading {
+    display: table;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    opacity: 0.8;
+}
+#loading .loadingMsg {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 140px;
+    background: url("loading.gif") center center no-repeat;
+}
 </style>
 
 </head>
@@ -165,6 +183,8 @@ $('#download_button').on(tapORclick, function(){
 
 
 $('input[name="radio-image-1"]:radio').on('change', function () {
+    dispLoading("処理中...");
+
     $('#img-original').css('display', 'none');
     $('#img-gray').css('display', 'none');
     $('#img-bw').css('display', 'none');
@@ -175,6 +195,8 @@ $('input[name="radio-image-1"]:radio').on('change', function () {
     let canvas = $(canvasName)[0];
     let img = $('#img_tag')[0];
     img.src = canvas.toDataURL('image/png');
+
+    removeLoading();
 });
 
 $(function () {
@@ -191,6 +213,9 @@ $(function () {
             $("#showDialog1")[0].click();
             return;
         }
+
+        dispLoading("処理中...");
+
         const canvas = $("#canvas-original");
         const context = canvas[0].getContext('2d');
         const canvasWidth = canvas.attr('width');
@@ -227,6 +252,8 @@ $(function () {
 
                 let img = $('#img_tag')[0];
                 img.src = $('#canvas-bw')[0].toDataURL('image/png');
+
+                removeLoading();
             }
             image.src = evt.target.result;
         }
@@ -299,6 +326,19 @@ function dithering(imageData, width, height) {
         }
     }
     return newImage;
+}
+
+function dispLoading(msg) {
+    msg = msg || "";
+    let dispMsg = "<div class='loadingMsg'>" + msg + "</div>";
+    setTimeout(() => {
+        if ($("#loading").length == 0) { $("body").append("<div id='loading'>" + dispMsg + "</div>"); }
+    }, 1);
+}
+function removeLoading() { 
+    setTimeout(() => {
+        $("#loading").remove(); 
+    }, 1);
 }
 
 </script>

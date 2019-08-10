@@ -142,7 +142,7 @@ table {
 <script>
 'use strict';
 
-const tapORclick = (window.ontouchstart===null) ? "touchstart" : "click";  
+const tapORclick = (window.ontouchstart===null) ? "touchstart" : "click";
 let prBitmapWidth, prBitmapHeight;
 let canvasName = "#canvas-bw"
 
@@ -220,9 +220,10 @@ $(function () {
                 const grayBitmap = grayscale(imageData, scaledWidth, scaledHeight);
                 setBitmap2Canvas("#canvas-gray", grayBitmap, scaledWidth, scaledHeight);
 
-// imageData = context.getImageData(0, 0, scaledWidth, scaledHeight).data;
                 const bwBitmap = dithering(imageData, scaledWidth, scaledHeight);
                 setBitmap2Canvas("#canvas-bw", bwBitmap, scaledWidth, scaledHeight);
+
+                $('input[name="radio-image-1"]').val(['bw']).checkboxradio('refresh');
 
                 let img = $('#img_tag')[0];
                 img.src = $('#canvas-bw')[0].toDataURL('image/png');
@@ -261,7 +262,7 @@ function grayscale(imageData, width, height) {
         const grayScale = 0.299 * imageData[n + 0] + 0.587 * imageData[n + 1] + 0.114 * imageData[n + 2];
         grayImage[index++] = Math.floor(grayScale);
     }
-    return grayImage;  //return to gray-scale image 
+    return grayImage;  //return to gray-scale image
 }
 function dithering(imageData, width, height) {
     //誤差拡散法 (Floyd-Steinberg dithering)

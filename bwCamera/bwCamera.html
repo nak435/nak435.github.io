@@ -151,7 +151,6 @@ function doLoad() {
 
 $('#download_button').on(tapORclick, function(){
     let canvas = $(canvasName)[0];
-console.log(`canvasName: ${canvasName}`)
     if (canvas.msToBlob) {
         var blob = canvas.msToBlob();
         window.navigator.msSaveBlob(blob, filename);

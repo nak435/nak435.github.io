@@ -28,12 +28,12 @@ table {
 
 <div data-role="page" id="info">
     <div data-role="header" data-position="fixed">
-        <h2>白黒カメラについて</h2>
+        <h2>白黒カメラ について</h2>
         <a href="#main" data-transition="flip" class="ui-btn ui-btn-right ui-icon-check ui-btn-icon-notext ui-corner-all" data-inset="true">OK</a>
     </div>
     <div role="main" class="ui-content">
         <h3>「白黒カメラ」とは、こちらの<a href="https://qiita.com/nak435/items/ff1ab1708f026de5e74a"
-                target="_blank">制作記事</a>で書いた「白黒カメラプリンタ」を母体に、画像のリサイズを止めて、また変換後のイメージをダウンロードできるように改修したアプリです。スマホ・タブレットやPCでも動作します。
+                target="_blank">制作記事</a>に書いた「白黒カメラプリンタ」をベースに、画像のリサイズを止めて、また変換後のイメージをダウンロードできるように改修したアプリです。スマホ・タブレットやPCでも動作します。
         </h3>
         <h3>使い方</h3>
         <ul>
@@ -44,9 +44,8 @@ table {
                     <li><b>グレースケール：</b>元画像をグレースケール変換した画像を表示します。</li>
                     <li><b>白黒画像：</b>グレースケール画像から白黒に変換した画像を表示します。
                         <ul type="disc">
-                            <li>誤差拡散法(<a
-                                    href="https://ja.wikipedia.org/wiki/%E3%83%95%E3%83%AD%E3%82%A4%E3%83%89-%E3%82%B9%E3%82%BF%E3%82%A4%E3%83%B3%E3%83%90%E3%83%BC%E3%82%B0%E3%83%BB%E3%83%87%E3%82%A3%E3%82%B6%E3%83%AA%E3%83%B3%E3%82%B0"
-                                    target="_blank">フロイド-スタインバーグ・ディザリング</a>)により白黒画像を生成します。</li>
+                            <li>誤差拡散法(<a href="https://ja.wikipedia.org/wiki/%E3%83%95%E3%83%AD%E3%82%A4%E3%83%89-%E3%82%B9%E3%82%BF%E3%82%A4%E3%83%B3%E3%83%90%E3%83%BC%E3%82%B0%E3%83%BB%E3%83%87%E3%82%A3%E3%82%B6%E3%83%AA%E3%83%B3%E3%82%B0"
+                                target="_blank">フロイド-スタインバーグ・ディザリング</a>)により白黒画像を生成します。</li>
                         </ul>
                     </li>
                 </ul>
@@ -103,13 +102,16 @@ table {
                         <input type="radio" name="radio-image-1" id="radio-image-1c" value="bw" checked="checked" data-mini="true">
                         <label for="radio-image-1c">白黒画像</label>
                     </fieldset>
+                    <div style="display:block">
+                        <img id="img_tag" /> <!-- width="320" height="320" /> -->
+                    </div>
                     <div id="img-original" style="display:none">
                         <canvas id="canvas-original" width="384" height="160"></canvas>
                     </div>
                     <div id="img-gray" style="display:none">
                         <canvas id="canvas-gray" width="384" height="160"></canvas>
                     </div>
-                    <div id="img-bw" style="display:block">
+                    <div id="img-bw" style="display:none">
                         <canvas id="canvas-bw" width="384" height="160"></canvas>
                     </div>
                 </li>
@@ -141,7 +143,7 @@ table {
 'use strict';
 
 const tapORclick = (window.ontouchstart===null) ? "touchstart" : "click";  
-let prBitmap = null, prBitmapWidth, prBitmapHeight;
+let prBitmapWidth, prBitmapHeight;
 let canvasName = "#canvas-bw"
 
 function doLoad() {
@@ -149,6 +151,7 @@ function doLoad() {
 
 $('#download_button').on(tapORclick, function(){
     let canvas = $(canvasName)[0];
+console.log(`canvasName: ${canvasName}`)
     if (canvas.msToBlob) {
         var blob = canvas.msToBlob();
         window.navigator.msSaveBlob(blob, filename);
@@ -167,8 +170,12 @@ $('input[name="radio-image-1"]:radio').on('change', function () {
     $('#img-gray').css('display', 'none');
     $('#img-bw').css('display', 'none');
 
-    canvasName = `#img-${$(this).val()}`
-    $(canvasName).css('display', 'block');
+    canvasName = `#canvas-${$(this).val()}`
+// $(`#img-${$(this).val()}`).css('display', 'block');
+
+    let canvas = $(canvasName)[0];
+    let img = $('#img_tag')[0];
+    img.src = canvas.toDataURL('image/png');
 });
 
 $(function () {
@@ -210,42 +217,22 @@ $(function () {
                 let info = `size: W${scaledWidth} × H${scaledHeight} ${rotate ? "®" : ""}`;
                 $("#imgSize").text(info);
 
-                const imageDate = context.getImageData(0, 0, scaledWidth, scaledHeight).data;
-                const grayBitmap = grayscale(imageDate, scaledWidth, scaledHeight);
+                let imageData = context.getImageData(0, 0, scaledWidth, scaledHeight).data;
+                const grayBitmap = grayscale(imageData, scaledWidth, scaledHeight);
                 setBitmap2Canvas("#canvas-gray", grayBitmap, scaledWidth, scaledHeight);
 
-                const imageData = context.getImageData(0, 0, scaledWidth, scaledHeight).data;
+// imageData = context.getImageData(0, 0, scaledWidth, scaledHeight).data;
                 const bwBitmap = dithering(imageData, scaledWidth, scaledHeight);
                 setBitmap2Canvas("#canvas-bw", bwBitmap, scaledWidth, scaledHeight);
 
-                //for printer
-                prBitmap = bw2PrBitmap(bwBitmap, scaledWidth, scaledHeight, rotate);
+                let img = $('#img_tag')[0];
+                img.src = $('#canvas-bw')[0].toDataURL('image/png');
             }
             image.src = evt.target.result;
         }
         fileReader.readAsDataURL(file);
     });
 });
-
-function bw2PrBitmap(bwBitmap, width, height, rotate) {
-    if (!rotate) {
-        prBitmapWidth = width;
-        prBitmapHeight = height;
-        return bwBitmap;
-    } else {
-        //rotate 90°
-        prBitmapWidth = height;
-        prBitmapHeight = width;
-        const rtBitmap = new Array(height * width).fill(0);
-        let counter = 0;
-        for (let x = height - 1; 0 <= x; x--) {
-            for (let y = 0; y < width; y++) {
-                rtBitmap[y * height + x] = bwBitmap[counter++];
-            }
-        }
-        return rtBitmap;
-    }
-}
 
 function setBitmap(context, bitmap, width, height) {
     const newImage = context.createImageData(width, height);

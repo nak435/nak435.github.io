@@ -151,11 +151,11 @@ function doLoad() {
 
 $('#download_button').on(tapORclick, function(){
     let canvas = $(canvasName)[0];
+    const filename = canvasName + '.png';
     if (canvas.msToBlob) {
         var blob = canvas.msToBlob();
         window.navigator.msSaveBlob(blob, filename);
     } else {
-        const filename = canvasName + '.png';
         let downloadLink = $('#download_link')[0];
         downloadLink.href = canvas.toDataURL('image/png');
         downloadLink.download = filename;

@@ -4,6 +4,7 @@
 |:--|:--|:--|
 | [sketch_switch](sketch_switch.zip) | スイッチのテスト | 押されたスイッチに対応した文字列"SW0"〜"SW5"をキーボード送出する |
 | [sketch_IdPass6](sketch_IdPass6.zip) | 1アクション目SW0、2アクション目SW1〜SW5に対応した文字列を送出する | 15秒ごとのスリープブロッカー機能付き |
+| [sketch_IdPass6_single](sketch_IdPass6_single.zip) | シングルアクション版 | 15秒ごとのスリープブロッカー機能付き |
 
 ## 前提
 

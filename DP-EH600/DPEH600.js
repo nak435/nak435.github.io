@@ -49,7 +49,7 @@ class DPEH600 {
     return {
       name: 'DPEH600',
       description: 'DP-EH600/サーマルプリンタ/UARTシリアル制御/DC5-9V,1.5A/58mm幅ロール紙',
-      shop: 'https://www.amazon.co.jp/%E3%82%B5%E3%83%BC%E3%83%9E%E3%83%AB%E3%83%97%E3%83%AA%E3%83%B3%E3%82%BF%E3%83%A6%E3%83%8B%E3%83%83%E3%83%88-%E6%84%9F%E7%86%B1%E7%B4%99%E3%83%97%E3%83%AA%E3%83%B3%E3%82%BF-TTL%E3%82%B7%E3%83%AA%E3%82%A2%E3%83%AB%E5%88%B6%E5%BE%A1-DC5-9V-58mm%E5%B9%85%E3%83%AD%E3%83%BC%E3%83%AB%E7%B4%99%2Fdp%2FB07DTGXCHD%2F',
+      shop: 'https://www.amazon.co.jp/dp/B07DTGXCHD',
     };
   }
 
